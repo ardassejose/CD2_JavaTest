@@ -24,6 +24,7 @@ public class FreteController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Listar frete específico", description = "Com base no ID fornecido, retorna frete específico")
     public ResponseEntity<Frete> getFreteById(@PathVariable Long id){
         Frete frete = freteService.getFreteById(id);
         if (frete != null) {
@@ -33,18 +34,20 @@ public class FreteController {
     }
 
     @GetMapping
+    @Operation(summary = "Listar os frete", description = "Lista todos os fretes disponíveis no banco de dados")
     public ResponseEntity<List<Frete>> getAllFretes() {
         List<Frete> fretes = freteService.getAllFretes();
         return ResponseEntity.ok(fretes);
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Deletar frete específico", description = "Com base no ID fornecido, exclui frete específico")
     public ResponseEntity<Void> deleteFreteById(@PathVariable Long id) {
         boolean isDeleted = freteService.deleteFreteById(id);
         if (isDeleted) {
             return ResponseEntity.noContent().build();
         }
-        
+
         return ResponseEntity.notFound().build();
     }
 }
