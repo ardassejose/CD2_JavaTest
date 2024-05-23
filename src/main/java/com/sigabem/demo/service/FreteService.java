@@ -82,6 +82,20 @@ public class FreteService {
         return false;
     }
 
+    public Frete updateFrete(Long id, Frete freteDetails) {
+        Optional<Frete> optionalFrete = freteRepository.findById(id);
+        if (optionalFrete.isPresent()) {
+            Frete frete = optionalFrete.get();
+            frete.setNomeDestinatario(freteDetails.getNomeDestinatario());
+            frete.setCepOrigem(freteDetails.getCepOrigem());
+            frete.setCepDestino(freteDetails.getCepDestino());
+            frete.setPeso(freteDetails.getPeso());
+            return freteRepository.save(frete);
+        } else {
+            return null;
+        }
+    }
+
     @Getter
     private static class CepResponse {
         private String uf;

@@ -50,4 +50,14 @@ public class FreteController {
 
         return ResponseEntity.notFound().build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Frete> updateFrete(@PathVariable Long id, @RequestBody Frete freteDetails) {
+        Frete updatedFrete = freteService.updateFrete(id, freteDetails);
+        if (updatedFrete != null) {
+            return ResponseEntity.ok(updatedFrete);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
