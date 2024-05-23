@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @Tag(name = "Frete Service", description = "Serviço para cálculo de frete")
@@ -60,6 +61,11 @@ public class FreteService {
         CepResponse response = restTemplate.getForObject(url, CepResponse.class);
 
         return response != null ? response.getUf() : null;
+    }
+
+    public Frete getFreteById(Long id) {
+        Optional<Frete> optionalFrete = freteRepository.findById(id);
+        return optionalFrete.orElse(null);
     }
 
     @Getter
