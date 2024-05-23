@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/frete")
 @Tag(name = "Frete Controller", description = "Controlador para operações de frete")
@@ -27,6 +29,22 @@ public class FreteController {
         if (frete != null) {
             return ResponseEntity.ok(frete);
         }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Frete>> getAllFretes() {
+        List<Frete> fretes = freteService.getAllFretes();
+        return ResponseEntity.ok(fretes);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteFreteById(@PathVariable Long id) {
+        boolean isDeleted = freteService.deleteFreteById(id);
+        if (isDeleted) {
+            return ResponseEntity.noContent().build();
+        }
+        
         return ResponseEntity.notFound().build();
     }
 }

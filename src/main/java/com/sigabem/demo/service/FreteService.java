@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -66,6 +67,19 @@ public class FreteService {
     public Frete getFreteById(Long id) {
         Optional<Frete> optionalFrete = freteRepository.findById(id);
         return optionalFrete.orElse(null);
+    }
+
+    public List<Frete> getAllFretes() {
+        return freteRepository.findAll();
+    }
+
+    public boolean deleteFreteById(Long id) {
+        if (freteRepository.existsById(id)) {
+            freteRepository.deleteById(id);
+            return true;
+        }
+
+        return false;
     }
 
     @Getter
