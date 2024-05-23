@@ -33,7 +33,7 @@ public class FreteController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping
+    @GetMapping("/")
     @Operation(summary = "Listar os frete", description = "Lista todos os fretes disponíveis no banco de dados")
     public ResponseEntity<List<Frete>> getAllFretes() {
         List<Frete> fretes = freteService.getAllFretes();
