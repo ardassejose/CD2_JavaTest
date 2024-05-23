@@ -1,31 +1,35 @@
 package com.sigabem.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class Frete {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "peso", nullable = false)
     private Double peso;
-    private String cepOrigem;
-    private String cepDestino;
+
+    @Column(name = "cep_origem", nullable = false)
+    private String cepOrigem = "00000-000";
+
+    @Column(name = "cep_destino", nullable = false)
+    private String cepDestino = "00000-000";
+
+    @Column(name = "nome_destinatario", nullable = false)
     private String nomeDestinatario;
+
+    @Column(name = "vl_total_frete", nullable = false)
     private Double vlTotalFrete;
+
+    @Column(name = "data_prevista_entrega", nullable = false)
     private LocalDateTime dataPrevistaEntrega;
+
+    @Column(name = "data_consulta", nullable = false)
     private LocalDateTime dataConsulta;
 }
