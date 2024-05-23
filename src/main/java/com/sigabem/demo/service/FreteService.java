@@ -4,6 +4,7 @@ import com.sigabem.demo.entity.Frete;
 import com.sigabem.demo.repository.FreteRepository;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,11 +12,17 @@ import java.time.LocalDateTime;
 
 @Service
 public class FreteService {
+
+    @Autowired
     private FreteRepository freteRepository;
 
     private static final String VIACEP_URL = "https://viacep.com.br/ws/%s/json/";
 
     public Frete calcularFrete(Frete frete){
+        if (frete.getCepOrigem() == null || frete.getCepDestino() == null || frete.getPeso() == null || frete.getNomeDestinatario() == null) {
+            throw new IllegalArgumentException("Todos os campos obrigatórios devem ser preenchidos.");
+        }
+
         String origemUF = getUFByCep(frete.getCepOrigem());
         String destinoUF = getUFByCep(frete.getCepDestino());
 
@@ -51,10 +58,8 @@ public class FreteService {
         return response != null ? response.getUf() : null;
     }
 
-}
-
-@Getter
-@Setter
-class CepResponse {
-    private String uf;
+    @Getter
+    private static class CepResponse {
+        private String uf;
+    }
 }
